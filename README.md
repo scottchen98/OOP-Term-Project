@@ -1,3 +1,7 @@
+XIOA ZHANG
+SCOTT CHEN
+STEPHANE LUBENDO
+
 Breakdown of Work:
 
 Example below:
