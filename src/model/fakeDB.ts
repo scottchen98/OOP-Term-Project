@@ -4,77 +4,80 @@ import IDatabase from "../interfaces/database.interface.ts";
 const database: IDatabase = {
   users: [
     {
-      id: "1",
+      id: 1,
       email: "gates@gmail.com",
       password: "gates123",
+      username: "billgates",
       firstName: "Bill",
       lastName: "Gates",
-      username: "billgates",
-      posts: [
-        {
-          id: "abc1",
-          userId: "billgates",
-          message: "Microsoft is a nice company",
-          createdAt: new Date(),
-          likes: 3,
-          comments: 0,
-          commentList: [
-            {
-              id: "abc2",
-              createdAt: "2012-01-09T11:25:13Z",
-              userId: "billgates",
-              message: "this is some random comment",
-            },
-          ],
-        },
-      ],
       following: [],
+      followers: [],
     },
+  ],
+  posts: [
     {
-      id: "2",
-      username: "james123",
-      email: "james123@gmail.com",
-      password: "james123",
-      firstName: "James",
-      lastName: "Smith",
-      posts: [
-        {
-          id: "abc3",
-          userId: "james123",
-          message: "A post by james",
-          createdAt: new Date(),
-          likes: 30,
-          comments: 12,
-          commentList: [
-            {
-              id: "abc4",
-              createdAt: "2012-01-05T04:13:24Z",
-              userId: "billgates",
-              message: "Cool post james. Glad I decided to follow you.",
-            },
-          ],
-        },
-        {
-          id: "abc5",
-          userId: "james123",
-          message: "Nice weather today in Vancouver",
-          createdAt: new Date(),
-          likes: 30,
-          comments: 12,
-          commentList: [
-            {
-              id: "abc6",
-              userId: "billgates",
-              createdAt: "2012-02-05T05:13:24Z",
-              message: "The weather is always nice when you're rich like me.",
-            },
-          ],
-        },
-      ],
-      following: [],
+      postId: 100,
+      userId: 1,
+      message: "Microsoft is a nice company",
+      likes: 3,
+      comments: 1,
+      createdAt: 1643648446955,
+    },
+  ],
+  comments: [
+    {
+      id: 10,
+      postId: 100,
+      userId: 1,
+      message: "this is some random comment",
+      createdAt: 1676188223124,
     },
   ],
 };
+
+// {
+//   id: "2",
+//   username: "james123",
+//   email: "james123@gmail.com",
+//   password: "james123",
+//   firstName: "James",
+//   lastName: "Smith",
+//   posts: [
+//     {
+//       id: "abc3",
+//       userId: "james123",
+//       message: "A post by james",
+//       createdAt: new Date(),
+//       likes: 30,
+//       comments: 12,
+//       commentList: [
+//         {
+//           id: "abc4",
+//           createdAt: "2012-01-05T04:13:24Z",
+//           userId: "billgates",
+//           message: "Cool post james. Glad I decided to follow you.",
+//         },
+//       ],
+//     },
+//     {
+//       id: "abc5",
+//       userId: "james123",
+//       message: "Nice weather today in Vancouver",
+//       createdAt: new Date(),
+//       likes: 30,
+//       comments: 12,
+//       commentList: [
+//         {
+//           id: "abc6",
+//           userId: "billgates",
+//           createdAt: "2012-02-05T05:13:24Z",
+//           message: "The weather is always nice when you're rich like me.",
+//         },
+//       ],
+//     },
+//   ],
+//   following: [],
+// },
 
 // -------- Note: I only created these as a simple test example for you, delete them later and use above db or your own --------------
 const userDatabase = [
@@ -104,7 +107,7 @@ const post = {
   comments: "1",
   likes: "2",
   commentList: ["cool post"],
-}
+};
 
 const posts = [
   {
