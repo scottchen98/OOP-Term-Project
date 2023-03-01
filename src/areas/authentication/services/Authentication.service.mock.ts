@@ -27,7 +27,7 @@ export class MockAuthenticationService implements IAuthenticationService {
     if (user) {
       return user;
     }
-    throw new Error(`Couldn't find user with email: ${email}`);
+    throw new Error(`User with that email does not exist`);
   }
 
   public async getUserById(id: number): Promise<false | IUser> {
