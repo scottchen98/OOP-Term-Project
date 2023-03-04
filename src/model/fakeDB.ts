@@ -10,9 +10,40 @@ const database: IDatabase = {
       username: "billgates",
       firstName: "Bill",
       lastName: "Gates",
-      following: [],
+      following: [2],
       followers: [],
     },
+    {
+      id: 2,
+      email: "james123@gmail.com",
+      password: "james123",
+      firstName: "James",
+      lastName: "Smith",
+      username: "james123",
+      following: [1],
+      followers: [],
+    },
+    {
+      id: 3,
+      email: "ad123@gmail.com",
+      password: "ad123123!",
+      firstName: "Armaan",
+      lastName: "Armaan",
+      username: "Armaan123",
+      following: [1,4],
+      followers: [],
+    },
+    {
+      id: 4,
+      email: "jo123@gmail.com",
+      password: "jo123",
+      firstName: "John",
+      lastName: "Armaan",
+      username: "John123",
+      following: [3],
+      followers: [],
+
+    }
   ],
   posts: [
     {
@@ -60,7 +91,7 @@ const database: IDatabase = {
   comments: [
     {
       id: 10,
-      postId: 100,
+      postId: 4,
       userId: 1,
       message: "this is some random comment",
       createdAt: 1676188223124,
