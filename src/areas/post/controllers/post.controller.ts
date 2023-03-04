@@ -6,9 +6,11 @@ import { post, posts } from "../../../model/fakeDB";
 class PostController implements IController {
   public path = "/posts";
   public router = Router();
+  private postService: IPostService;
 
   constructor(postService: IPostService) {
     this.initializeRoutes();
+    this.postService = postService
   }
 
   private initializeRoutes() {
@@ -21,6 +23,7 @@ class PostController implements IController {
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
   private getAllPosts = (_: Request, res: Response) => {
+    this.postService.
     res.render("post/views/posts", { posts });
   };
 
