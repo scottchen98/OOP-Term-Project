@@ -1,9 +1,11 @@
 import IPost from "../../../interfaces/post.interface";
+import IUser from "../../../interfaces/user.interface";
+import IComment from "../../../interfaces/comment.interface";
 import IPostService from "./IPostService";
 
 // ❗️ Implement this class much later, once everything works fine with your mock db
 export class PostService implements IPostService {
-  addPost(post: IPost, username: string): void {
+  addPost(message: string, username: string): void {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
@@ -11,17 +13,38 @@ export class PostService implements IPostService {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
-  findById(id: string): IPost {
+  findById(id: number): IPost {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
-  addCommentToPost(message: { id: string; createdAt: string; userId: string; message: string }, postId: string): void {
+  addCommentToPost(postId: number, userId: number, message: string): void {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
 
-  sortPosts(posts: IPost[]): IPost[] {
+  sortByDate(toSort: IPost[] | IComment[]): IPost[] | IComment[]  {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
+
+  searchUser(searchFor: string): IUser[] {
+    // 🚀 Implement this yourself.
+    throw new Error("Method not implemented.");
+  }
+
+  searchPost(searchFor: string): IPost[] {
+    // 🚀 Implement this yourself.
+    throw new Error("Method not implemented.");
+  }
+
+  checkFollowing(userId: number, currentFollowing: number[]): boolean {
+    // 🚀 Implement this yourself.
+    throw new Error("Method not implemented.");
+  }
+
+  changeFollow(userId: number, currentUsername: string): void {
+    // 🚀 Implement this yourself.
+    throw new Error("Method not implemented.");
+  }
+
 }

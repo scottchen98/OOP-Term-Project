@@ -1,17 +1,28 @@
 import IPost from "../../../interfaces/post.interface";
+import IUser from "../../../interfaces/user.interface";
+import IComment from "../../../interfaces/comment.interface";
+
 
 // ⭐️ Feel free to change this interface in any way you like. It is simply an example...
 export default interface IPostService {
-  addPost(post: IPost, username: string): void;
+  addPost(message: string, username: string): void;
 
-  sortPosts(posts: IPost[]): IPost[];
+  sortByDate(toSort: IPost[] | IComment[]): IPost[] | IComment[];
 
   getAllPosts(username: string): IPost[];
 
-  findById(id: string): IPost | undefined;
+  findById(id: number): IPost | undefined;
 
   addCommentToPost(
-    message: { id: string; createdAt: string; userId: string; message: string },
-    postId: string
-  ): IPost | void;
+    postId: number, userId: number, message: string
+  ): void;
+
+  searchUser(searchFor: string): IUser[];
+
+
+  searchPost(searchFor: string): IPost[];
+
+  checkFollowing(userId: number, currentFollowing: number[]): boolean;
+
+  changeFollow(userId: number, currentUsername: string): void;
 }
