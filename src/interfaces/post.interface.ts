@@ -1,13 +1,13 @@
 import IComment from "./comment.interface";
 
-interface IPost {
-  id: string;
+interface IPost  {
+  postId: number;
+  userId: number;
   message: string;
-  userId: string;
-  createdAt: Date;
-  commentList?: Array<IComment>;
   likes: number;
-  comments: number;
+  createdAt: number;
+  commentList: number[];
 }
+
 
 export default IPost;
