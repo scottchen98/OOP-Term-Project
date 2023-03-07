@@ -8,7 +8,8 @@ import IUser from "../../../interfaces/user.interface";
 export class MockPostService implements IPostService {
   addPost(message: string, username: string): void {
     let post: IPost = {
-    postId: Math.max(...Object.keys(db.posts).map(Number)) + 1,
+    postId: Math.max(...Object.keys(db.posts).map(Number)) + 2,
+    // postId: Math.max(...db.posts.map(post => post.postId)) + 1,
     userId: db.users.filter((user) => user.username === username)[0].id,
     message: message,
     likes: 0,
@@ -16,6 +17,9 @@ export class MockPostService implements IPostService {
     createdAt: Date.now(),
   }
   db.posts.push(post);
+  console.log("fkDB: ", db.posts)
+    console.log("posts keys: ", Object.keys(db.posts));
+    console.log("postIDs: ", post.postId);
     // 🚀 Implement this yourself.
     // throw new Error("Method not implemented.");
   }
@@ -78,6 +82,7 @@ export class MockPostService implements IPostService {
 
   deletePost(postId: number): void {
     const deleteIndex = db.posts.indexOf(this.findById(postId));
+    console.log(this.findById(postId))
     delete db.posts[deleteIndex]
   }
 

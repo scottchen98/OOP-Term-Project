@@ -77,6 +77,7 @@ class PostController implements IController {
 
     const mock = new MockPostService();
     const deletePostId = Number(req.params.id);
+    console.log("HELLOOOO: ", deletePostId)
     mock.deletePost(deletePostId);
     res.redirect("back")
   };
