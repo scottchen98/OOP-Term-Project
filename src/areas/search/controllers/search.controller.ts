@@ -36,11 +36,9 @@ class SearchController implements IController {
         const currentUser = "billgates"; 
         const currentFollowing = db.users.filter((user) => user.username === currentUser)[0].following;
         const userId = Number(req.query.userId);
-        // console.log(userId)
         if(req.body) {
             mock.changeFollow(userId, currentUser)
         }
-
         res.redirect("back")
     }
 }

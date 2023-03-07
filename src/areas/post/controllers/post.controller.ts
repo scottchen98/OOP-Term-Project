@@ -14,7 +14,7 @@ class PostController implements IController {
   }
 
   private initializeRoutes() {
-    // ensureAuthenticated
+    // ensureAuthenticated needed
     this.router.get(this.path, this.getAllPosts);
     this.router.get(`${this.path}/:id`, this.getPostById);
     this.router.get(`${this.path}/:id/delete`, this.deletePost);
@@ -26,12 +26,6 @@ class PostController implements IController {
   private getAllPosts = (req: Request, res: Response, next: NextFunction) => {
     const user = "billgates"; // need to change to current user
     // req.user?.username;
-    if(user) {
-      next("/posts")
-    } else {
-      next("/") // redirect to the homepage/login
-    }
-   
     const mock = new MockPostService();
     const posts = mock.sortByDate(mock.getAllPosts(user)); // need to change to current user
     res.render("post/views/posts", { posts: posts, getCommentsById: mock.getCommentsById, getUsernameById: mock.getUsernameById });
