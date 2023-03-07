@@ -28,7 +28,7 @@ class SearchController implements IController {
         const resultPosts = mock.searchPost(searchFor);
         const currentFollowing = db.users.filter((user) => user.username === currentUser)[0].following;
         
-        res.render("search/views/search", { resultUsers: resultUsers, resultPosts: resultPosts, getUsernameById: mock.getUsernameById, checkFollowing: mock.checkFollowing, currentFollowing: currentFollowing });
+        res.render("search/views/search", { resultUsers: resultUsers, resultPosts: resultPosts, getUsernameById: mock.getUsernameById, checkFollowing: mock.checkFollowing, currentFollowing: currentFollowing, currentUser: currentUser });
     };
 
     private changeFollow = async (req: Request, res: Response) => {
