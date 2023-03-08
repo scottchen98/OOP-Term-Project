@@ -1,4 +1,4 @@
-import App from "./App";
+import App from "./app";
 import PostController from "./areas/post/controllers/post.controller";
 import LandingController from "./areas/landing/controllers/Landing.controller";
 import AuthenticationController from "./areas/authentication/controllers/Authentication.controller";
