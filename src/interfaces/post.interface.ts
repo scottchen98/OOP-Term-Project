@@ -5,8 +5,8 @@ interface IPost {
   userId: number;
   message: string;
   likes: number;
-  comments: number;
   createdAt: number;
+  commentList: number[];
 }
 
 export default IPost;

@@ -33,8 +33,8 @@ declare global {
       username: string;
       firstName: string;
       lastName: string;
-      following: IUser[];
-      followers: IUser[];
+      following: number[];
+      followers: number[];
     }
   }
 }

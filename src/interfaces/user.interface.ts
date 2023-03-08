@@ -2,11 +2,11 @@ import IPost from "./post.interface";
 
 export default interface IUser {
   id: number;
+  username: string;
   email: string;
   password: string;
-  username: string;
   firstName: string;
   lastName: string;
-  following: IUser[];
-  followers: IUser[];
+  following?: number[];
+  followers?: number[];
 }

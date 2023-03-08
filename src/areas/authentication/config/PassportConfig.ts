@@ -6,6 +6,7 @@
 import passport from "passport";
 import { PassportStrategy } from "../../../interfaces/strategy.interface";
 import { MockAuthenticationService } from "../services";
+import IUser from "../../../interfaces/user.interface";
 
 export default class PassportConfig {
   constructor(strategies: PassportStrategy[]) {
@@ -30,7 +31,7 @@ export default class PassportConfig {
       const mockAuthentication = new MockAuthenticationService();
       let user = await mockAuthentication.getUserById(id);
       if (user) {
-        done(null, user);
+        done(null, user as Express.User);
       } else {
         done({ message: "User not found" }, null);
       }
