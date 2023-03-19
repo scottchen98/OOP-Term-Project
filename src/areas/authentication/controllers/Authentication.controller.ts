@@ -19,8 +19,8 @@ class AuthenticationController implements IController {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/register`, this.showRegistrationPage);
-    this.router.post(`${this.path}/register`, this.registration);
+    this.router.get(`${this.path}/register`, forwardAuthenticated, this.showRegistrationPage);
+    this.router.post(`${this.path}/register`, forwardAuthenticated, this.registration);
     this.router.get(`${this.path}/login`, forwardAuthenticated, this.showLoginPage);
     this.router.post(`${this.path}/login`, this.login);
     this.router.post(`${this.path}/logout`, this.logout);
