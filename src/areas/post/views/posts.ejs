@@ -200,8 +200,8 @@
                   class="z-50 absolute mt-3 transform -translate-x-full bg-white rounded-md shadow-lg min-w-max"
                 >
                   <div class="flex flex-col p-4 space-y-1 font-medium border-b">
-                    <span class="text-gray-800">John Doe</span>
-                    <span class="text-sm text-gray-400">john.doe@gmail.com</span>
+                    <span class="text-gray-800"><%= currentUserFirstName %> <%= currentUserLastName %></span>
+                    <span class="text-sm text-gray-400"><%= currentUserEmail %></span>
                   </div>
                   <ul class="flex flex-col p-2 my-2 space-y-1">
                     <li>
@@ -228,7 +228,7 @@
                 <input
                   class="w-9/12 bg-gray-200 rounded-full px-3 py-2"
                   name="postText"
-                  placeholder="What's on your mind, john?"
+                  placeholder="What's on your mind, <%= currentUserFirstName %>?"
                 />
                 <input class="transition duration-500 ease-in-out hover:bg-red-600 transform w-2/12 rounded-full p-2 bg-gray-800 cursor-pointer text-gray-200" type="submit" value="Post">
               </form>
