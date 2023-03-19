@@ -62,7 +62,7 @@ export class MockPostService implements IPostService {
   }
 
   sortByDate(toSort: IPost[] | IComment[]): IPost[] | IComment[] {
-    toSort.sort((a, b) => b.createdAt - a.createdAt);
+    toSort.sort((a: IPost | IComment, b: IPost | IComment) => b.createdAt - a.createdAt);
     return toSort;
     // 🚀 Implement this yourself.
     // throw new Error("Method not implemented.");
