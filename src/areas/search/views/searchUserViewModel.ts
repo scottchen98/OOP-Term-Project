@@ -1,13 +1,23 @@
 import IUser from "../../../interfaces/user.interface";
 
 export class SearchUserViewModel {
-  public fullName: string;
+  public resultUser: {
+    id: number;
+    username: string;
+    firstName: string;
+    lastName: string;
+  };
 
   constructor(user: IUser) {
-    this.fullName = this.formatUser(user);
+    this.resultUser = this.formatUser(user);
   }
 
   private formatUser(user: IUser) {
-    return `${user.firstName} ${user.lastName}`;
+    return {
+      id: user.id,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    };
   }
 }
