@@ -1,9 +1,11 @@
 import { Request, Response, NextFunction, Router } from "express";
 import IController from "../../../interfaces/controller.interface";
 import IPostService from "../services/IPostService";
-import { post, posts } from "../../../model/fakeDB";
 import { MockPostService } from "../services/Post.service.mock";
 import { checkPostPrivilege, ensureAuthenticated } from "../../../middleware/authentication.middleware";
+import { PostViewModel } from "../views/post.viewmodel";
+import IPost from "../../../interfaces/post.interface";
+import IComment from "../../../interfaces/comment.interface";
 
 class PostController implements IController {
   public path = "/posts";
@@ -24,12 +26,22 @@ class PostController implements IController {
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
   private getAllPosts = (req: Request, res: Response, next: NextFunction) => {
-    const user = "billgates"; // need to change to current user
-    // req.user?.username;
+    const user = req.user.username; // need to change to current user
     const mock = new MockPostService();
     const posts = mock.sortByDate(mock.getAllPosts(user)); // need to change to current user
+    res.locals.currentUserFirstName = req.user.firstName;
+    res.locals.currentUserLastName = req.user.lastName;
+    res.locals.currentUserEmail = req.user.email;
+
+    // format posts data
+    const formattedPost = posts.map((post: IPost | IComment) => {
+      if ("commentList" in post) {
+        return new PostViewModel(post).post;
+      }
+    });
+
     res.render("post/views/posts", {
-      posts: posts,
+      posts: formattedPost,
       getCommentsById: mock.getCommentsById,
       getUsernameById: mock.getUsernameById,
     });
@@ -58,8 +70,7 @@ class PostController implements IController {
   private createComment = async (req: Request, res: Response) => {
     const mock = new MockPostService();
     const postId = Number(req.params.id);
-    const userId = 1;
-    // req.user?.userId;
+    const userId = req.user.id;
     const message = req.body.commentText;
     mock.addCommentToPost(postId, userId, message);
     res.redirect("back");
@@ -67,7 +78,7 @@ class PostController implements IController {
   private createPost = async (req: Request, res: Response) => {
     // next
 
-    const currentUser = "billgates"; // need to change to current user
+    const currentUser = req.user.username; // need to change to current user
     const mock = new MockPostService();
     const postMessage = req.body.postText;
     mock.addPost(postMessage, currentUser);
