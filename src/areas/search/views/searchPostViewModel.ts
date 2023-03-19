@@ -4,16 +4,20 @@ import IUser from "../../../interfaces/user.interface";
 
 export class SearchPostViewModel {
   readonly _db = database;
-  public formattedPost: { fullName: string; message: string };
+  public resultPost: {
+    postId: number;
+    userId: number;
+    message: string;
+  };
 
   constructor(post: IPost) {
-    this.formattedPost = this.formatPost(post);
+    this.resultPost = this.formatPost(post);
   }
 
   private formatPost(post: IPost) {
-    const user = this.getUser(post.userId);
     return {
-      fullName: `${user.firstName} ${user.lastName}`,
+      postId: post.postId,
+      userId: post.userId,
       message: post.message,
     };
   }
