@@ -47,5 +47,10 @@ export class PostService implements IPostService {
     throw new Error("Method not implemented.");
   }
 
+  findByUsername(username: string): IUser {
+    // 🚀 Implement this yourself.
+    throw new Error("Method not implemented.");
+  }
+
   likePost(postId: number, userId: number, post: IPost): void {}
 }
