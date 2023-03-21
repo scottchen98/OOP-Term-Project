@@ -113,7 +113,7 @@ export class MockPostService implements IPostService {
     }
   }
 
-  findByUsername(username: string): IUser {
+  findByUsername(username: string): IUser| undefined {
     // 🚀 Implement this yourself.
     for (const user of db.users) {
       if (user.username === username) return user;

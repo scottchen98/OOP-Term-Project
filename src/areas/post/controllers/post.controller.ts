@@ -5,7 +5,10 @@ import { MockPostService } from "../services/Post.service.mock";
 import { checkPostPrivilege, ensureAuthenticated } from "../../../middleware/authentication.middleware";
 import { PostViewModel } from "../views/post.viewmodel";
 import IPost from "../../../interfaces/post.interface";
+import IUser from "../../../interfaces/user.interface";
+
 import IComment from "../../../interfaces/comment.interface";
+import {Express} from "express"
 
 class PostController implements IController {
   public path = "/posts";
@@ -29,12 +32,14 @@ class PostController implements IController {
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
   private getAllPosts = (req: Request, res: Response, next: NextFunction) => {
-    const user = req.user.username; // need to change to current user
+    const user = req.user.username;
     const mock = new MockPostService();
-    const posts = mock.sortByDate(mock.getAllPosts(user)); // need to change to current user
-    res.locals.currentUserFirstName = req.user.firstName;
-    res.locals.currentUserLastName = req.user.lastName;
-    res.locals.currentUserEmail = req.user.email;
+    const posts = mock.sortByDate(mock.getAllPosts(user)); 
+    if (user) {
+      res.locals.currentUserFirstName = req.user.firstName;
+      res.locals.currentUserLastName = req.user.lastName;
+      res.locals.currentUserEmail = req.user.email;
+    } 
 
     // format posts data
     const formattedPost = posts.map((post: IPost | IComment) => {
@@ -51,9 +56,7 @@ class PostController implements IController {
   };
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary post object
-  private getPostById = async (req: Request, res: Response) => {
-    // need next function
-
+  private getPostById = async (req: Request, res: Response) => {    
     const postId = Number(req.params.id);
     const mock = new MockPostService();
     const post = mock.findById(postId);
@@ -79,7 +82,6 @@ class PostController implements IController {
     res.redirect("back");
   };
   private createPost = async (req: Request, res: Response) => {
-    // next
 
     const currentUser = req.user.username; // need to change to current user
     const mock = new MockPostService();
@@ -88,11 +90,8 @@ class PostController implements IController {
     res.redirect("back");
   };
   private deletePost = async (req: Request, res: Response) => {
-    // need next function
-
     const mock = new MockPostService();
     const deletePostId = Number(req.params.id);
-    console.log("HELLOOOO: ", deletePostId);
     mock.deletePost(deletePostId);
     res.redirect("back");
   };

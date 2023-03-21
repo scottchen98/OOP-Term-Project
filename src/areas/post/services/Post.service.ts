@@ -47,7 +47,7 @@ export class PostService implements IPostService {
     throw new Error("Method not implemented.");
   }
 
-  findByUsername(username: string): IUser {
+  findByUsername(username: string): IUser | undefined {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }

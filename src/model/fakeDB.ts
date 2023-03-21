@@ -95,7 +95,7 @@ const database: IDatabase = {
       message: "A post by John",
       likes: 30,
       createdAt: 1643648446955,
-      commentList: [10, 1, 3, 4],
+      commentList: [2,1,3,4],
     },
     {
       postId: 5,
@@ -177,6 +177,18 @@ const database: IDatabase = {
   ],
 };
 
+liked: [
+  {
+    postId: 3,
+    userId: 1,
+    liked: true
+  },
+  {
+    postId: 3,
+    userId: 2,
+    liked: true
+  }
+]
 // -------- Note: I only created these as a simple test example for you, delete them later and use above db or your own --------------
 const userDatabase = [
   {
