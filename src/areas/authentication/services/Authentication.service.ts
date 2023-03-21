@@ -5,7 +5,7 @@ import { IAuthenticationService } from "./IAuthentication.service";
 export class AuthenticationService implements IAuthenticationService {
   // ⭐️ _db should be a reference to your real database driver
   readonly _db: any;
-  async findUserByEmail(email: String): Promise<IUser> {
+  async findUserByEmail(email: String): Promise<IUser| null> {
     // 🚀 Talk to your real database here
     throw new Error("Method not implemented.");
   }

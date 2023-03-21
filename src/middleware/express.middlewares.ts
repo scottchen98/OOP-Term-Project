@@ -1,7 +1,10 @@
 import express from "express";
 import path from "path";
-import session from "express-session";
+import session, { MemoryStore } from "express-session";
 import morgan from "morgan";
+require("dotenv").config();
+import connectRedis from "connect-redis";
+const Redis = require("ioredis");
 
 module.exports = (app) => {
   // Static File Serving and Post Body Parsing
@@ -13,9 +16,21 @@ module.exports = (app) => {
   // Logging Middleware
   app.use(morgan("tiny"));
 
+  //===== Configure Redis ======//
+  // Initialize Client
+  const redisClient = new Redis({
+    port: process.env.REDIS_PORT,
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASSWORD,
+  });
+
+  // Initialize store.
+  const RedisStore = connectRedis(session);
+
   // Session Configuration
   app.use(
     session({
+      store: process.env.NODE_ENV === "production" ? new RedisStore({ client: redisClient }) : new MemoryStore(),
       secret: "secret",
       resave: false,
       saveUninitialized: false,

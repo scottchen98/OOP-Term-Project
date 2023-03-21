@@ -32,9 +32,11 @@
     "redis": "^3.0.2"
   },
   "devDependencies": {
+    "@types/connect-redis": "^0.0.20",
     "@types/express": "^4.17.9",
     "@types/express-session": "^1.17.3",
-    "@types/node": "^14.18.40",
+    "@types/morgan": "^1.9.4",
+    "@types/node": "^14.14.19",
     "@types/node-fetch": "^2.5.7",
     "@types/passport": "^1.0.6",
     "@types/passport-local": "^1.0.33",

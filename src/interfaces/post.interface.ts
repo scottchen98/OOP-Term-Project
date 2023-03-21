@@ -6,7 +6,7 @@ interface IPost {
   message: string;
   likes: number;
   createdAt: number;
-  commentList: number[],
+  commentList: number[];
 }
 
 export default IPost;

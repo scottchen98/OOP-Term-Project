@@ -1,4 +1,3 @@
-
 import IDatabase from "../interfaces/database.interface.ts";
 
 // Please feel free to not use this, or completely change it to your liking. It is just an example.
@@ -8,9 +7,9 @@ const database: IDatabase = {
       id: 1,
       email: "gates@gmail.com",
       password: "gates123",
-      username: "billgates",
       firstName: "Bill",
       lastName: "Gates",
+      username: "billgates",
       following: [2],
       followers: [],
     },
@@ -26,6 +25,16 @@ const database: IDatabase = {
     },
     {
       id: 3,
+      email: "jobs@gmail.com",
+      password: "steve123",
+      firstName: "Steve",
+      lastName: "Jobs",
+      username: "stevejobs",
+      following: [],
+      followers: [],
+    },
+    {
+      id: 4,
       email: "ad123@gmail.com",
       password: "ad123123!",
       firstName: "Armaan",
@@ -35,7 +44,7 @@ const database: IDatabase = {
       followers: [],
     },
     {
-      id: 4,
+      id: 5,
       email: "jo123@gmail.com",
       password: "jo123",
       firstName: "John",
@@ -43,8 +52,17 @@ const database: IDatabase = {
       username: "John123",
       following: [3],
       followers: [],
-
-    }
+    },
+    {
+      id: 6,
+      email: "musk@gmail.com",
+      password: "elon123",
+      firstName: "Elon",
+      lastName: "Musk",
+      username: "elonmusk",
+      following: [],
+      followers: [],
+    },
   ],
   posts: [
     {
@@ -87,6 +105,22 @@ const database: IDatabase = {
       createdAt: 1643648446955,
       commentList: [],
     },
+    {
+      postId: 6,
+      userId: 3,
+      message: "Apple is a nice company",
+      likes: 3,
+      commentList: [],
+      createdAt: 1643648446955,
+    },
+    {
+      postId: 7,
+      userId: 3,
+      message: "Twitter is my toy",
+      likes: 3,
+      commentList: [],
+      createdAt: 1643648446955,
+    },
   ],
 
   comments: [
@@ -119,7 +153,27 @@ const database: IDatabase = {
       userId: 1,
       createdAt: 1643648446955,
       // createdAt: "2012-02-05T05:13:24Z",
-    }
+    },
+    {
+      id: 5,
+      postId: 4,
+      userId: 1,
+      message: "this is some random comment",
+      createdAt: 1676188223124,
+    },
+  ],
+
+  liked: [
+    {
+      postId: 3,
+      userId: 1,
+      liked: true,
+    },
+    {
+      postId: 3,
+      userId: 2,
+      liked: true,
+    },
   ],
 };
 
@@ -163,7 +217,7 @@ const post = {
   comments: "1",
   likes: "2",
   commentList: ["cool post"],
-}
+};
 
 const posts = [
   {

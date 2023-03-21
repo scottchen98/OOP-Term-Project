@@ -14,21 +14,25 @@ import IPost from "../../../interfaces/post.interface";
 // date that you store in createdAt.
 
 export class PostViewModel {
-  public postId: string;
-  public userId: string;
-  public createdAt: Date;
-  public message: string;
-  public comments: string;
-  public likes: string;
-  public commentList?: Array<IComment>;
+  public post: {
+    postId: number;
+    userId: number;
+    message: string;
+    likes: number;
+    createdAt: number;
+  };
 
   constructor(post: IPost) {
-    this.postId = post.id;
-    this.userId = post.userId;
-    this.createdAt = post.createdAt;
-    this.message = post.message;
-    this.comments = post.comments?.toString();
-    this.likes = post.likes?.toString();
-    this.commentList = post.commentList;
+    this.post = this.formatPost(post);
+  }
+
+  private formatPost(post: IPost) {
+    return {
+      postId: post.postId,
+      userId: post.userId,
+      message: post.message,
+      likes: post.likes,
+      createdAt: post.createdAt,
+    };
   }
 }

@@ -1,5 +1,5 @@
-import IPost from "../../../interfaces/post.interface";
 import IUser from "../../../interfaces/user.interface";
+import IPost from "../../../interfaces/post.interface";
 import IComment from "../../../interfaces/comment.interface";
 import IPostService from "./IPostService";
 
@@ -22,7 +22,7 @@ export class PostService implements IPostService {
     throw new Error("Method not implemented.");
   }
 
-  sortByDate(toSort: IPost[] | IComment[]): IPost[] | IComment[]  {
+  sortByDate(toSort: IPost[] | IComment[]): IPost[] | IComment[] {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
@@ -47,4 +47,10 @@ export class PostService implements IPostService {
     throw new Error("Method not implemented.");
   }
 
+  findByUsername(username: string): IUser | undefined {
+    // 🚀 Implement this yourself.
+    throw new Error("Method not implemented.");
+  }
+
+  likePost(postId: number, userId: number, post: IPost): void {}
 }
