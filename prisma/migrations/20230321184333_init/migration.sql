@@ -1,0 +1,7 @@
+-- CreateTable
+CREATE TABLE "liked" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "postId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "liked" BOOLEAN NOT NULL
+);

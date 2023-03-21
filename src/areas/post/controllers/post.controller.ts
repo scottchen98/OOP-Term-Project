@@ -33,8 +33,6 @@ class PostController implements IController {
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary post object
   private getPostById = async (req: Request, res: Response) => {
-    // need next function
-    
     const postId = Number(req.params.id);
     const mock = new MockPostService();
     const post = mock.findById(postId);
@@ -57,8 +55,6 @@ class PostController implements IController {
 
   };
   private createPost = async (req: Request, res: Response) => {
-    // next
-
     const currentUser = "billgates"; // need to change to current user
     const mock = new MockPostService();
     const postMessage = req.body.postText;
@@ -67,11 +63,8 @@ class PostController implements IController {
 
   };
   private deletePost = async (req: Request, res: Response) => {
-    // need next function
-
     const mock = new MockPostService();
     const deletePostId = Number(req.params.id);
-    console.log("HELLOOOO: ", deletePostId)
     mock.deletePost(deletePostId);
     res.redirect("back")
   };
