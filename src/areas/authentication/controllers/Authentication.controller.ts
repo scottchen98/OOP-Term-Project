@@ -3,6 +3,8 @@ import IController from "../../../interfaces/controller.interface";
 import { IAuthenticationService } from "../services";
 import passport from "passport";
 import { forwardAuthenticated } from "../../../middleware/authentication.middleware";
+import IUser from "../../../interfaces/user.interface";
+import { database } from "../../../model/fakeDB";
 
 declare module "express-session" {
   interface SessionData {
@@ -13,9 +15,11 @@ declare module "express-session" {
 class AuthenticationController implements IController {
   public path = "/auth";
   public router = express.Router();
+  private service: IAuthenticationService;
 
   constructor(service: IAuthenticationService) {
     this.initializeRoutes();
+    this.service = service;
   }
 
   private initializeRoutes() {
@@ -23,7 +27,7 @@ class AuthenticationController implements IController {
     this.router.post(`${this.path}/register`, forwardAuthenticated, this.registration);
     this.router.get(`${this.path}/login`, forwardAuthenticated, this.showLoginPage);
     this.router.post(`${this.path}/login`, this.login);
-    this.router.post(`${this.path}/logout`, this.logout);
+    this.router.get(`${this.path}/logout`, this.logout);
   }
 
   private showLoginPage = (req: express.Request, res: express.Response) => {
@@ -42,8 +46,29 @@ class AuthenticationController implements IController {
     failureRedirect: "/auth/login",
     failureMessage: true,
   });
-  private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {};
-  private logout = async (req: express.Request, res: express.Response) => {};
+  private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    let newUser: IUser = {
+      id: null,
+      email: req.body.email,
+      password: req.body.password,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      username: req.body.userName,
+      following: [],
+      followers: [],
+    };
+    this.service.createUser(newUser);
+    console.log(database.users);
+    res.redirect("/auth/login");
+  };
+  private logout = async (req, res) => {
+    req.logout((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+    res.redirect("/");
+  };
 }
 
 export default AuthenticationController;

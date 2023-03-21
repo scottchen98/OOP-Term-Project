@@ -10,9 +10,11 @@ import IComment from "../../../interfaces/comment.interface";
 class PostController implements IController {
   public path = "/posts";
   public router = Router();
+  private postService: IPostService;
 
   constructor(postService: IPostService) {
     this.initializeRoutes();
+    this.postService = postService;
   }
 
   private initializeRoutes() {
@@ -22,6 +24,7 @@ class PostController implements IController {
     this.router.get(`${this.path}/:id/delete`, ensureAuthenticated, checkPostPrivilege, this.deletePost);
     this.router.post(`${this.path}/:id/comment`, ensureAuthenticated, this.createComment);
     this.router.post(`${this.path}`, ensureAuthenticated, this.createPost);
+    this.router.get(`${this.path}/like/:id`, this.likePost);
   }
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
@@ -92,6 +95,17 @@ class PostController implements IController {
     console.log("HELLOOOO: ", deletePostId);
     mock.deletePost(deletePostId);
     res.redirect("back");
+  };
+
+  private likePost = async (req: Request, res: Response, next: NextFunction) => {
+    const mock = new MockPostService();
+    const postId = req.params.id;
+    let username = req.user.username;
+    let user = mock.findByUsername(username);
+    const postLiked = mock.findById(Number(postId));
+
+    this.postService.likePost(Number(postId), user.id, postLiked);
+    res.redirect("/posts");
   };
 }
 

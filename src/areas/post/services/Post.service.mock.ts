@@ -112,6 +112,38 @@ export class MockPostService implements IPostService {
       db.users[currentUserIndex].following.push(userId);
     }
   }
+
+  findByUsername(username: string): IUser {
+    // 🚀 Implement this yourself.
+    for (const user of db.users) {
+      if (user.username === username) return user;
+    }
+  }
+
+  likePost(postid: number, userid: number, post: IPost): void {
+    let newLike = {
+      postId: postid,
+      userId: userid,
+      liked: false,
+    };
+    db.liked.push(newLike);
+
+    for (const like of db.liked) {
+      if (like.postId === postid && like.userId === userid) {
+        if (like.liked === true) {
+          like.liked = false;
+          post.likes -= 1;
+          console.log(db.liked);
+          return;
+        } else if (like.liked === false) {
+          like.liked = true;
+          post.likes += 1;
+          console.log(db.liked);
+          return;
+        }
+      }
+    }
+  }
 }
 
 // const test = new MockPostService();
