@@ -1,4 +1,4 @@
-interface IComment    {
+interface IComment {
   id: number;
   postId: number;
   userId: number;

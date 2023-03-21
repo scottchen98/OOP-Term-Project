@@ -1,6 +1,14 @@
 import express from "express";
 import IController from "../../../interfaces/controller.interface";
 import { IAuthenticationService } from "../services";
+import passport from "passport";
+import { forwardAuthenticated } from "../../../middleware/authentication.middleware";
+
+declare module "express-session" {
+  interface SessionData {
+    messages: string[];
+  }
+}
 
 class AuthenticationController implements IController {
   public path = "/auth";
@@ -13,13 +21,15 @@ class AuthenticationController implements IController {
   private initializeRoutes() {
     this.router.get(`${this.path}/register`, this.showRegistrationPage);
     this.router.post(`${this.path}/register`, this.registration);
-    this.router.get(`${this.path}/login`, this.showLoginPage);
+    this.router.get(`${this.path}/login`, forwardAuthenticated, this.showLoginPage);
     this.router.post(`${this.path}/login`, this.login);
     this.router.post(`${this.path}/logout`, this.logout);
   }
 
-  private showLoginPage = (_: express.Request, res: express.Response) => {
-    res.render("authentication/views/login");
+  private showLoginPage = (req: express.Request, res: express.Response) => {
+    const errorMsg = req.session.messages ? req.session.messages[0] : false;
+    req.session.messages = [];
+    res.render("authentication/views/login", { errorMsg });
   };
 
   private showRegistrationPage = (_: express.Request, res: express.Response) => {
@@ -27,7 +37,11 @@ class AuthenticationController implements IController {
   };
 
   // 🔑 These Authentication methods needs to be implemented by you
-  private login = (req: express.Request, res: express.Response) => {};
+  private login = passport.authenticate("local", {
+    successRedirect: "/posts",
+    failureRedirect: "/auth/login",
+    failureMessage: true,
+  });
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {};
   private logout = async (req: express.Request, res: express.Response) => {};
 }

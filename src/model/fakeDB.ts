@@ -7,9 +7,9 @@ const database: IDatabase = {
       id: 1,
       email: "gates@gmail.com",
       password: "gates123",
-      username: "billgates",
       firstName: "Bill",
       lastName: "Gates",
+      username: "billgates",
       following: [2],
       followers: [],
     },
@@ -22,9 +22,20 @@ const database: IDatabase = {
       username: "james123",
       following: [1],
       followers: [],
+
     },
     {
       id: 3,
+      email: "jobs@gmail.com",
+      password: "steve123",
+      firstName: "Steve",
+      lastName: "Jobs",
+      username: "stevejobs",
+      following: [],
+      followers: [],
+    },
+    {
+      id: 4,
       email: "ad123@gmail.com",
       password: "ad123123!",
       firstName: "Armaan",
@@ -34,7 +45,7 @@ const database: IDatabase = {
       followers: [],
     },
     {
-      id: 4,
+      id: 5,
       email: "jo123@gmail.com",
       password: "jo123",
       firstName: "John",
@@ -43,7 +54,17 @@ const database: IDatabase = {
       following: [3],
       followers: [],
 
-    }
+    },
+    {
+      id: 6,
+      email: "musk@gmail.com",
+      password: "elon123",
+      firstName: "Elon",
+      lastName: "Musk",
+      username: "elonmusk",
+      following: [],
+      followers: [],
+    },
   ],
   posts: [
     {
@@ -85,6 +106,22 @@ const database: IDatabase = {
       likes: 12,
       createdAt: 1643648446955,
       commentList: [],
+    },
+    {
+      postId: 6,
+      userId: 2,
+      message: "Apple is a nice company",
+      likes: 3,
+      commentList: [],
+      createdAt: 1643648446955,
+    },
+    {
+      postId: 7,
+      userId: 3,
+      message: "Twitter is my toy",
+      likes: 3,
+      commentList: [],
+      createdAt: 1643648446955,
     },
   ],
 

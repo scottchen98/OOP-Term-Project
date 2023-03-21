@@ -1,6 +1,6 @@
 import IComment from "./comment.interface";
 
-interface IPost  {
+interface IPost {
   postId: number;
   userId: number;
   message: string;
