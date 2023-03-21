@@ -1,3 +1,4 @@
+import IUser from "../../../interfaces/user.interface";
 import IPost from "../../../interfaces/post.interface";
 import IPostService from "./IPostService";
 
@@ -7,11 +8,15 @@ export class PostService implements IPostService {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
-  getAllPosts(username: string): IPost[] {
+  getAllPosts(userId: number): IPost[] {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
   findById(id: string): IPost {
+    // 🚀 Implement this yourself.
+    throw new Error("Method not implemented.");
+  }
+  findByUsername(username: string): IUser {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
@@ -21,6 +26,11 @@ export class PostService implements IPostService {
   }
 
   sortPosts(posts: IPost[]): IPost[] {
+    // 🚀 Implement this yourself.
+    throw new Error("Method not implemented.");
+  }
+
+  likePost(postId: number, userId: number, post:IPost): void {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }

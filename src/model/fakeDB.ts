@@ -109,7 +109,7 @@ const database: IDatabase = {
     },
     {
       postId: 6,
-      userId: 2,
+      userId: 3,
       message: "Apple is a nice company",
       likes: 3,
       commentList: [],
@@ -126,13 +126,6 @@ const database: IDatabase = {
   ],
 
   comments: [
-    {
-      id: 10,
-      postId: 4,
-      userId: 1,
-      message: "this is some random comment",
-      createdAt: 1676188223124,
-    },
     {
       id: 1,
       postId: 4,
@@ -155,9 +148,32 @@ const database: IDatabase = {
       userId: 1,
       createdAt: 1643648446955,
       // createdAt: "2012-02-05T05:13:24Z",
-    }
+    },
+    {
+      id: 5,
+      postId: 4,
+      userId: 1,
+      message: "this is some random comment",
+      createdAt: 1676188223124,
+    },
   ],
+
+  liked: [
+    {
+      postId: 3,
+      userId: 1,
+      liked: true,
+    },
+    {
+      postId: 3,
+      userId: 2,
+      liked: true,
+    },
+
+  ]
 };
+
+
 
 
 

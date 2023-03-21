@@ -37,6 +37,8 @@ export class MockAuthenticationService implements IAuthenticationService {
   }
 
   public async createUser(user: IUser): Promise<IUser> {
-    throw new Error("Method not implemented");
-  }
+    user.id = database.users.length + 1;
+    database.users.push(user)
+    return user
+    }
 }
