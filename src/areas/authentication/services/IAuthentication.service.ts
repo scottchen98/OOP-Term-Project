@@ -6,7 +6,7 @@ export interface IAuthenticationService {
   _db: any;
   findUserByEmail(email: String): Promise<IUser | null>;
 
-  createUser(user: IUser): Promise<IUser>;
+  createUser(user: IUser): Promise<IUser | undefined>;
 
   getUserByEmailAndPassword(email: string, password: string): Promise<IUser | undefined>;
 }
