@@ -5,7 +5,7 @@ import { IAuthenticationService } from "./IAuthentication.service";
 export class MockAuthenticationService implements IAuthenticationService {
   readonly _db = database;
 
-  public async getUserByEmailAndPassword(email: string, password: string): Promise<IUser> {
+  public async getUserByEmailAndPassword(email: string, password: string): Promise<IUser | undefined> {
     let user = await this.findUserByEmail(email);
 
     if (user) {

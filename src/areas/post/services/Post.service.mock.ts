@@ -29,7 +29,7 @@ export class MockPostService implements IPostService {
 
     // Get the posts from user followings
     const userFollowing = userData.following;
-    const followingPosts = db.posts.filter((post) => userFollowing.includes(post.userId));
+    const followingPosts = db.posts.filter((post) => userFollowing?.includes(post.userId));
 
     // Get user's posts
     const userPosts = db.posts.filter((post) => post.userId === userData.id);
@@ -103,17 +103,19 @@ export class MockPostService implements IPostService {
 
   changeFollow(userId: number, currentUsername: string): void {
     const currentUserIndex = db.users.indexOf(db.users.filter((user) => user.username === currentUsername)[0]);
-    // console.log(currentUserIndex);
     const currentFollowing = db.users.filter((user) => user.username === currentUsername)[0].following;
-    const userIndex = currentFollowing.indexOf(userId);
-    if (currentFollowing.includes(userId)) {
-      delete db.users[currentUserIndex].following[userIndex];
-    } else {
-      db.users[currentUserIndex].following.push(userId);
+    if (currentUserIndex !== -1 && currentFollowing !== undefined) {
+      const userIndex = currentFollowing.indexOf(userId);
+
+      if (currentFollowing.includes(userId)) {
+        delete db.users[currentUserIndex].following?.[userIndex];
+      } else {
+        db.users[currentUserIndex].following?.push(userId);
+      }
     }
   }
 
-  findByUsername(username: string): IUser| undefined {
+  findByUsername(username: string): IUser | undefined {
     // 🚀 Implement this yourself.
     for (const user of db.users) {
       if (user.username === username) return user;

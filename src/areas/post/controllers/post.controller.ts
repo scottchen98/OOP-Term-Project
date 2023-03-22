@@ -8,7 +8,7 @@ import IPost from "../../../interfaces/post.interface";
 import IUser from "../../../interfaces/user.interface";
 
 import IComment from "../../../interfaces/comment.interface";
-import {Express} from "express"
+import { Express } from "express";
 
 class PostController implements IController {
   public path = "/posts";
@@ -32,31 +32,32 @@ class PostController implements IController {
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
   private getAllPosts = (req: Request, res: Response, next: NextFunction) => {
-    const user = req.user.username;
-    const mock = new MockPostService();
-    const posts = mock.sortByDate(mock.getAllPosts(user)); 
-    if (user) {
+    if (req.user) {
+      const user = req.user.username;
+      const mock = new MockPostService();
+      const posts = mock.sortByDate(mock.getAllPosts(user));
+
       res.locals.currentUserFirstName = req.user.firstName;
       res.locals.currentUserLastName = req.user.lastName;
       res.locals.currentUserEmail = req.user.email;
-    } 
 
-    // format posts data
-    const formattedPost = posts.map((post: IPost | IComment) => {
-      if ("commentList" in post) {
-        return new PostViewModel(post).post;
-      }
-    });
+      // format posts data
+      const formattedPost = posts.map((post: IPost | IComment) => {
+        if ("commentList" in post) {
+          return new PostViewModel(post).post;
+        }
+      });
 
-    res.render("post/views/posts", {
-      posts: formattedPost,
-      getCommentsById: mock.getCommentsById,
-      getUsernameById: mock.getUsernameById,
-    });
+      res.render("post/views/posts", {
+        posts: formattedPost,
+        getCommentsById: mock.getCommentsById,
+        getUsernameById: mock.getUsernameById,
+      });
+    }
   };
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary post object
-  private getPostById = async (req: Request, res: Response) => {    
+  private getPostById = async (req: Request, res: Response) => {
     const postId = Number(req.params.id);
     const mock = new MockPostService();
     const post = mock.findById(postId);
@@ -74,20 +75,23 @@ class PostController implements IController {
 
   // 🚀 These post methods needs to be implemented by you
   private createComment = async (req: Request, res: Response) => {
-    const mock = new MockPostService();
-    const postId = Number(req.params.id);
-    const userId = req.user.id;
-    const message = req.body.commentText;
-    mock.addCommentToPost(postId, userId, message);
-    res.redirect("back");
+    if (req.user) {
+      const mock = new MockPostService();
+      const postId = Number(req.params.id);
+      const userId = req.user.id;
+      const message = req.body.commentText;
+      mock.addCommentToPost(postId, userId, message);
+      res.redirect("back");
+    }
   };
   private createPost = async (req: Request, res: Response) => {
-
-    const currentUser = req.user.username; // need to change to current user
-    const mock = new MockPostService();
-    const postMessage = req.body.postText;
-    mock.addPost(postMessage, currentUser);
-    res.redirect("back");
+    if (req.user) {
+      const currentUser = req.user.username; // need to change to current user
+      const mock = new MockPostService();
+      const postMessage = req.body.postText;
+      mock.addPost(postMessage, currentUser);
+      res.redirect("back");
+    }
   };
   private deletePost = async (req: Request, res: Response) => {
     const mock = new MockPostService();
@@ -97,14 +101,18 @@ class PostController implements IController {
   };
 
   private likePost = async (req: Request, res: Response, next: NextFunction) => {
-    const mock = new MockPostService();
-    const postId = req.params.id;
-    let username = req.user.username;
-    let user = mock.findByUsername(username);
-    const postLiked = mock.findById(Number(postId));
+    if (req.user) {
+      const postId = req.params.id;
+      let username = req.user.username;
+      const mock = new MockPostService();
+      let user = mock.findByUsername(username);
 
-    this.postService.likePost(Number(postId), user.id, postLiked);
-    res.redirect("/posts");
+      if (user) {
+        const postLiked = mock.findById(Number(postId));
+        mock.likePost(Number(postId), user.id, postLiked);
+        res.redirect("/posts");
+      }
+    }
   };
 }
 
