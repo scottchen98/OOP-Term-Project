@@ -27,7 +27,7 @@ class PostController implements IController {
     this.router.get(`${this.path}/:id/delete`, ensureAuthenticated, checkPostPrivilege, this.deletePost);
     this.router.post(`${this.path}/:id/comment`, ensureAuthenticated, this.createComment);
     this.router.post(`${this.path}`, ensureAuthenticated, this.createPost);
-    this.router.get(`${this.path}/like/:id`, this.likePost);
+    this.router.get(`${this.path}/like/:id`, ensureAuthenticated, this.likePost);
   }
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
