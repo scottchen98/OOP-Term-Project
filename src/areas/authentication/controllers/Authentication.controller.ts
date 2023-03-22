@@ -4,7 +4,7 @@ import { IAuthenticationService } from "../services";
 import passport from "passport";
 import { forwardAuthenticated } from "../../../middleware/authentication.middleware";
 import IUser from "../../../interfaces/user.interface";
-import { database } from "../../../model/fakeDB";
+import { MockAuthenticationService } from "../services/Authentication.service.mock";
 
 declare module "express-session" {
   interface SessionData {
@@ -46,21 +46,20 @@ class AuthenticationController implements IController {
     failureRedirect: "/auth/login",
     failureMessage: true,
   });
+
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    let newUser: IUser = {
-      id: null,
-      email: req.body.email,
-      password: req.body.password,
+    const user = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       username: req.body.userName,
-      following: [],
-      followers: [],
+      email: req.body.email,
+      password: req.body.password,
     };
-    this.service.createUser(newUser);
-    console.log(database.users);
+    const mock = new MockAuthenticationService();
+    mock.createUser(user);
     res.redirect("/auth/login");
   };
+
   private logout = async (req: express.Request, res: express.Response) => {
     req.logOut();
     res.redirect("/");
