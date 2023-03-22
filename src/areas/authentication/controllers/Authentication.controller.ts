@@ -36,8 +36,10 @@ class AuthenticationController implements IController {
     res.render("authentication/views/login", { errorMsg });
   };
 
-  private showRegistrationPage = (_: express.Request, res: express.Response) => {
-    res.render("authentication/views/register");
+  private showRegistrationPage = (req: express.Request, res: express.Response) => {
+    const errorMsg = req.session.messages ? req.session.messages[0] : false;
+    req.session.messages = [];
+    res.render("authentication/views/register", { errorMsg });
   };
 
   // 🔑 These Authentication methods needs to be implemented by you
@@ -55,9 +57,18 @@ class AuthenticationController implements IController {
       email: req.body.email,
       password: req.body.password,
     };
-    const mock = new MockAuthenticationService();
-    mock.createUser(user);
-    res.redirect("/auth/login");
+
+    try {
+      const newUser = await this.service.createUser(user);
+      res.redirect("/auth/login");
+    } catch (error) {
+      if (error instanceof Error) {
+        if (req.session.messages) {
+          req.session.messages.push(error.message);
+          res.redirect("/auth/register");
+        }
+      }
+    }
   };
 
   private logout = async (req: express.Request, res: express.Response) => {
