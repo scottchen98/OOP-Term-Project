@@ -1,25 +1,29 @@
 import { database } from "../../../model/fakeDB";
 import IUser from "../../../interfaces/user.interface";
 import { IAuthenticationService } from "./IAuthentication.service";
+import bcrypt from "bcrypt";
+
+interface SignUp {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string;
+}
 
 export class MockAuthenticationService implements IAuthenticationService {
   readonly _db = database;
 
   public async getUserByEmailAndPassword(email: string, password: string): Promise<IUser | undefined> {
-    let user = await this.findUserByEmail(email);
+    const user = await this.findUserByEmail(email);
 
     if (user) {
-      if (await this.isUserValid(user, password)) {
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
         return user;
       }
+      throw new Error("Password is incorrect");
     }
-  }
-
-  public async isUserValid(user: IUser, password: string): Promise<boolean> {
-    if (user.password === password) {
-      return true;
-    }
-    throw new Error("Password is incorrect");
   }
 
   public async findUserByEmail(email: string): Promise<null | IUser> {
@@ -36,9 +40,26 @@ export class MockAuthenticationService implements IAuthenticationService {
     return user ? user : false;
   }
 
-  public async createUser(user: IUser): Promise<IUser> {
-    user.id = database.users.length + 1;
-    database.users.push(user);
-    return user;
+  public async createUser(user: SignUp): Promise<IUser | undefined> {
+    try {
+      const { firstName, lastName, username, email, password } = user;
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const newUser: IUser = {
+        id: this._db.users.length + 1,
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+        username,
+        following: [],
+        followers: [],
+      };
+
+      this._db.users.push(newUser);
+      return newUser;
+    } catch (error) {
+      console.log("Error: ", error);
+    }
   }
 }
