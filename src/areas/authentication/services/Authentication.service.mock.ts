@@ -2,6 +2,7 @@ import { database } from "../../../model/fakeDB";
 import IUser from "../../../interfaces/user.interface";
 import { IAuthenticationService } from "./IAuthentication.service";
 import bcrypt from "bcrypt";
+import EmailAlreadyExistsException from "../../../exceptions/EmailAlreadyExists";
 
 interface SignUp {
   firstName: string;
@@ -41,8 +42,12 @@ export class MockAuthenticationService implements IAuthenticationService {
   }
 
   public async createUser(user: SignUp): Promise<IUser | undefined> {
-    try {
-      const { firstName, lastName, username, email, password } = user;
+    const { firstName, lastName, username, email, password } = user;
+    const emailExists = this._db.users.find((user) => user.email === email);
+
+    if (emailExists) {
+      throw new Error(new EmailAlreadyExistsException(email).message);
+    } else {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const newUser: IUser = {
@@ -58,8 +63,6 @@ export class MockAuthenticationService implements IAuthenticationService {
 
       this._db.users.push(newUser);
       return newUser;
-    } catch (error) {
-      console.log("Error: ", error);
     }
   }
 }
