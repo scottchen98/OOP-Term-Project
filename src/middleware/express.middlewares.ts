@@ -6,7 +6,7 @@ require("dotenv").config();
 import connectRedis from "connect-redis";
 const Redis = require("ioredis");
 
-module.exports = (app) => {
+module.exports = (app: express.Application) => {
   // Static File Serving and Post Body Parsing
   app.use(express.static(path.join(__dirname, "..", "public")));
   app.use(express.urlencoded({ extended: true }));
