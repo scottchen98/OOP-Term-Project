@@ -11,6 +11,13 @@ declare module "express-session" {
     messages: string[];
   }
 }
+interface SignUp {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string;
+}
 
 class AuthenticationController implements IController {
   public path = "/auth";
@@ -50,7 +57,7 @@ class AuthenticationController implements IController {
   });
 
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const user = {
+    const user: SignUp = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       username: req.body.userName,

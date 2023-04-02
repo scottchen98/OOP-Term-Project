@@ -14,7 +14,7 @@ model users {
   id        Int     @id @default(autoincrement())
   email     String  @unique
   password  String
-  username  String?
+  username  String? @unique
   firstName String
   lastName  String
   following users[] @relation("UserFollows")
@@ -42,10 +42,10 @@ model comments {
 }
 
 model liked {
-  id     Int     @id @default(autoincrement())
-  post   posts?  @relation(fields: [postId], references: [postId])
-  user   users?  @relation(fields: [userId], references: [id])
-  liked  Boolean
+  id     Int    @id @default(autoincrement())
+  post   posts? @relation(fields: [postId], references: [postId])
+  user   users? @relation(fields: [userId], references: [id])
+  liked  Int
   postId Int
   userId Int
 }

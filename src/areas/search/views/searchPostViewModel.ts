@@ -1,20 +1,21 @@
 import { database } from "../../../model/fakeDB";
 import IPost from "../../../interfaces/post.interface";
 import IUser from "../../../interfaces/user.interface";
+import { comments, posts, PrismaClient, users } from "@prisma/client";
 
 export class SearchPostViewModel {
   readonly _db = database;
   public resultPost: {
     postId: number;
     userId: number;
-    message: string;
+    message: string | null;
   };
 
-  constructor(post: IPost) {
+  constructor(post: posts) {
     this.resultPost = this.formatPost(post);
   }
 
-  private formatPost(post: IPost) {
+  private formatPost(post: posts) {
     return {
       postId: post.postId,
       userId: post.userId,

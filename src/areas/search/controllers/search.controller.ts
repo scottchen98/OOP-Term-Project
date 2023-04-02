@@ -8,13 +8,16 @@ import { SearchPostViewModel } from "../views/searchPostViewModel";
 import { SearchUserViewModel } from "../views/searchUserViewModel";
 import IUser from "../../../interfaces/user.interface";
 import IPost from "../../../interfaces/post.interface";
+import ISearchService from "../../search/services/ISearchService";
 
 class SearchController implements IController {
   public path = "/search";
   public router = express.Router();
+  private service: ISearchService;
 
-  constructor() {
+  constructor(service: ISearchService) {
     this.initializeRoutes();
+    this.service = service;
   }
 
   private initializeRoutes() {
@@ -25,35 +28,46 @@ class SearchController implements IController {
   private search = async (req: Request, res: Response) => {
     if (req.user) {
       const currentUser = req.user.username;
-      const mock = new MockPostService();
       const searchFor = String(req.query.query);
-      const resultUsers = mock.searchUser(searchFor);
-      const resultPosts = mock.searchPost(searchFor);
-      const currentFollowing = db.users.filter((user) => user.username === currentUser)[0].following;
+      const resultUsers = await this.service.searchUsers(searchFor);
+      const resultPosts = await this.service.searchPosts(searchFor);
 
       // format resultUsers and resultPosts
-      const formattedUsers = resultUsers.map((user: IUser) => new SearchUserViewModel(user).resultUser);
-      const formattedPosts = resultPosts.map((post: IPost) => new SearchPostViewModel(post).resultPost);
+      const formattedUsers = resultUsers.map((user) => new SearchUserViewModel(user).resultUser);
+      const formattedPosts = resultPosts.map((post) => new SearchPostViewModel(post).resultPost);
+
+      // get username for each result post
+      const allUsernamesFromResultPosts = await this.service.getAllUsernames(formattedPosts);
+      console.log("ALLUSERNAMES", allUsernamesFromResultPosts);
+
+      // get current following users from current logged-in user
+      const currentFollowing = await this.service.getCurrentFollowingUsers(currentUser);
+      const checkFollowing = await this.service.checkFollowing(formattedUsers, currentFollowing);
+
+      console.log("CHECKFOLLOWING", checkFollowing);
 
       res.render("search/views/search", {
-        resultUsers: formattedUsers,
-        resultPosts: formattedPosts,
-        getUsernameById: mock.getUsernameById,
-        checkFollowing: mock.checkFollowing,
-        currentFollowing: currentFollowing,
+        formattedUsers: formattedUsers,
+        formattedPosts: formattedPosts,
+        allUsernamesFromResultPosts,
+        checkFollowing,
         currentUser: currentUser,
       });
     }
   };
 
   private changeFollow = async (req: Request, res: Response) => {
-    if (req.user) {
-      const mock = new MockPostService();
-      const currentUser = req.user.username;
-      const currentFollowing = db.users.filter((user) => user.username === currentUser)[0].following;
-      const userId = Number(req.query.userId);
-      if (req.body) {
-        mock.changeFollow(userId, currentUser);
+    if (req.user && req.query.userId) {
+      const currentUserId = req.user.id;
+      const followingUserId = +req.query.userId;
+
+      const currentUser = await this.service.getCurrentUser(currentUserId);
+      const isFollowing = currentUser?.following.filter((followingUser) => followingUser.id === followingUserId);
+
+      if (isFollowing && isFollowing.length === 0) {
+        await this.service.followUser(currentUserId, followingUserId);
+      } else {
+        await this.service.unfollowUser(currentUserId, followingUserId);
       }
       res.redirect("back");
     }

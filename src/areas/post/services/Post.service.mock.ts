@@ -6,7 +6,7 @@ import IUser from "../../../interfaces/user.interface";
 
 // ⭐️ Feel free to change this class in any way you like. It is simply an example...
 export class MockPostService implements IPostService {
-  addPost(message: string, username: string): void {
+  addPost(message: string, username: number): void {
     let post: IPost = {
       postId: Math.max(...Object.keys(db.posts).map(Number)) + 2,
       // postId: Math.max(...db.posts.map(post => post.postId)) + 1,
@@ -53,7 +53,7 @@ export class MockPostService implements IPostService {
       postId: postId,
       userId: userId,
       message: message,
-      createdAt: Date.now(),
+      createdAt: new Date(),
     };
     db.comments.push(comment);
     this.findById(postId).commentList.push(comment.id);
@@ -62,7 +62,7 @@ export class MockPostService implements IPostService {
   }
 
   sortByDate(toSort: IPost[] | IComment[]): IPost[] | IComment[] {
-    toSort.sort((a: IPost | IComment, b: IPost | IComment) => b.createdAt - a.createdAt);
+    toSort.sort((a: IPost | IComment, b: IPost | IComment) => b.createdAt.getTime() - a.createdAt.getTime());
     return toSort;
     // 🚀 Implement this yourself.
     // throw new Error("Method not implemented.");

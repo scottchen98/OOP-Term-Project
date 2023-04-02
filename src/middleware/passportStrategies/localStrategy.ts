@@ -3,8 +3,9 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { MockAuthenticationService } from "../../areas/authentication/services/Authentication.service.mock";
 import { PassportStrategy } from "../../interfaces/strategy.interface";
+import { AuthenticationService } from "../../areas/authentication/services";
 
-const mockAuthentication = new MockAuthenticationService();
+const authentication = new AuthenticationService();
 
 const localStrategy = new LocalStrategy(
   {
@@ -13,7 +14,7 @@ const localStrategy = new LocalStrategy(
   },
   async (email, password, done) => {
     try {
-      const user = await mockAuthentication.getUserByEmailAndPassword(email, password);
+      const user = await authentication.getUserByEmailAndPassword(email, password);
 
       done(null, user);
     } catch (error: unknown) {

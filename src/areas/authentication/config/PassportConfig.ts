@@ -5,7 +5,7 @@
 //    Ensure code is fully typed wherever possible (unless inference can be made)
 import passport from "passport";
 import { PassportStrategy } from "../../../interfaces/strategy.interface";
-import { MockAuthenticationService } from "../services";
+import { AuthenticationService } from "../services";
 import IUser from "../../../interfaces/user.interface";
 
 export default class PassportConfig {
@@ -28,8 +28,9 @@ export default class PassportConfig {
 
   private deserializeUser() {
     passport.deserializeUser(async function (id: number, done: (err: any, user?: Express.User | false | null) => void) {
-      const mockAuthentication = new MockAuthenticationService();
-      let user = await mockAuthentication.getUserById(id);
+      const authentication = new AuthenticationService();
+      let user = await authentication.getUserById(id);
+
       if (user) {
         done(null, user as Express.User);
       } else {

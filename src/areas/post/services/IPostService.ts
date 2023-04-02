@@ -1,28 +1,27 @@
 import IUser from "../../../interfaces/user.interface";
 import IPost from "../../../interfaces/post.interface";
 import IComment from "../../../interfaces/comment.interface";
+import { comments, posts, PrismaClient, users } from "@prisma/client";
 
 // ⭐️ Feel free to change this interface in any way you like. It is simply an example...
 export default interface IPostService {
-  addPost(message: string, username: string): void;
+  addPost(message: string, userId: number): void;
 
-  sortByDate(toSort: IPost[] | IComment[]): IPost[] | IComment[];
+  getAllPosts(username: string): Promise<(posts & { commentList: comments[] })[]>;
 
-  getAllPosts(username: string): IPost[];
+  getUsernamesOfCommentsOrPosts(
+    allCommentsOrAllPosts: comments[] | posts[]
+  ): Promise<({ username: string | null } | null)[]>;
 
-  findById(id: number): IPost | undefined;
+  findById(postId: number): Promise<(posts & { commentList: comments[] }) | null>;
+
+  getUsernameById(userId: number): Promise<string | null | undefined>;
+
+  getCommentsById(postId: number): Promise<comments[]>;
 
   addCommentToPost(postId: number, userId: number, message: string): void;
 
-  searchUser(searchFor: string): IUser[];
+  likePost(postId: number, userId: number): void;
 
-  searchPost(searchFor: string): IPost[];
-
-  checkFollowing(userId: number, currentFollowing: number[]): boolean;
-
-  changeFollow(userId: number, currentUsername: string): void;
-
-  findByUsername(username: string): IUser | undefined;
-
-  likePost(postId: number, userId: number, post: IPost): void;
+  deletePost(postId: number): void;
 }

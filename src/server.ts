@@ -5,12 +5,14 @@ import AuthenticationController from "./areas/authentication/controllers/Authent
 import { MockAuthenticationService } from "./areas/authentication/services/Authentication.service.mock";
 import { PostService, MockPostService } from "./areas/post/services";
 import SearchController from "./areas/search/controllers/search.controller";
+import { AuthenticationService } from "./areas/authentication/services";
+import { SearchService } from "./areas/search/services/Search.service";
 
 const server = new App([
   new LandingController(),
-  new PostController(new MockPostService()),
-  new AuthenticationController(new MockAuthenticationService()),
-  new SearchController(),
+  new PostController(new PostService()),
+  new AuthenticationController(new AuthenticationService()),
+  new SearchController(new SearchService()),
 ]);
 
 server.start();
