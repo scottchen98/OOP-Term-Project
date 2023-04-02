@@ -70,6 +70,7 @@ class AuthenticationController implements IController {
       res.redirect("/auth/login");
     } catch (error) {
       if (error instanceof Error) {
+        next(error);
         if (req.session.messages) {
           req.session.messages.push(error.message);
           res.redirect("/auth/register");
