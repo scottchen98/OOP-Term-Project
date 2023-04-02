@@ -105,6 +105,7 @@
                   type="text"
                   name="query"
                   placeholder="Search"
+                  required
                   class="px-4 py-3 rounded-md hover:bg-gray-100 lg:max-w-sm md:py-2 md:flex-1 focus:outline-none md:focus:bg-gray-100 md:focus:shadow md:focus:border"
                 />
                 <button hidden type="submit"></button>
@@ -229,6 +230,7 @@
                   class="w-9/12 bg-gray-200 rounded-full px-3 py-2"
                   name="postText"
                   placeholder="What's on your mind, <%= currentUserFirstName %>?"
+                  required
                 />
                 <input class="transition duration-500 ease-in-out hover:bg-red-600 transform w-2/12 rounded-full p-2 bg-gray-800 cursor-pointer text-gray-200" type="submit" value="Post">
               </form>
@@ -237,7 +239,7 @@
           </div>
           
         <!-- Post begins -->
-        <% posts.forEach(post => { %>
+        <% posts.forEach((post, index) => { %>
         <div class="flex bg-gray-100 mb-4 rounded-lg">
           <div class="w-1/8 text-right pl-3 pt-3">
             <div>
@@ -255,11 +257,11 @@
               <div>
                 <span class="font-bold"
                   ><a href="#" class="text-black"
-                    ><%= getUsernameById(post.userId) %></a
+                    ><%= allUsernames[index].username %></a
                   ></span
                 >
                 <span class="text-grey-dark">&middot;</span>
-                <span class="text-grey-dark"><%= new Date(post.createdAt) %></span>
+                <span class="text-grey-dark"><%= new Date(post.createdAt).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }) %></span>
                 <span class="inline-block">
                   <form action="/posts/<%= post.postId %>/delete" method="get">
                     <input type="hidden" value="<%= post.postId %>" name="postToDelete" />
@@ -280,7 +282,7 @@
                     href="/posts/<%= post.postId %>"
                     class="text-grey-dark hover:no-underline hover:text-blue-light"
                     ><i class="fa fa-comment fa-lg mr-2"></i> <%=
-                    getCommentsById(post.postId).length %></a
+                    eachPostCommentLength[index] %></a
                   ></span
                 
                 >
