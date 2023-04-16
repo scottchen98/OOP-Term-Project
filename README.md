@@ -1,41 +1,11 @@
-Breakdown of Work:
+# devHouse
 
+## devHouse is a fake, twitter-like social application for developers who want to make posts about coding-related things
 
-Example below:
-March 9th (First Sprint Complete)
-Amy Chan:
-I worked on the following tasks:
+**Team Members:** Scott Chen, Xiao Zhang, and Stephane Lubendo
 
-1. <Insert Some Task Here> - This task is responsible for xyz functionality.
-2. <Insert Some Task Here> - This task is responsible for xyz functionality.
-3. <Insert Some Task Here> - This task is responsible for xyz functionality.
+**Languages:** Typescript
 
-I also needed to research on Youtube and Google the following things:
+**Frameworks / Libraries:** Tailwind, Express.js, Passport.js, bcrypt, Prisma
 
-1. <Insert Video or Link to thing you needed to research>
-
-John Chen:
-I worked on the following tasks:
-
-1. <Insert Some Task Here> - This task is responsible for xyz functionality.
-2. <Insert Some Task Here> - This task is responsible for xyz functionality.
-3. <Insert Some Task Here> - This task is responsible for xyz functionality.
-
-March 16th (Second Sprint Complete)
-Amy Chan:
-I worked on the following tasks:
-
-1. <Insert Some Task Here> - This task is responsible for xyz functionality.
-2. <Insert Some Task Here> - This task is responsible for xyz functionality.
-3. <Insert Some Task Here> - This task is responsible for xyz functionality.
-
-I also needed to research on Youtube and Google the following things:
-
-1. <Insert Video or Link to thing you needed to research>
-
-John Chen:
-I worked on the following tasks:
-
-1. <Insert Some Task Here> - This task is responsible for xyz functionality.
-2. <Insert Some Task Here> - This task is responsible for xyz functionality.
-3. <Insert Some Task Here> - This task is responsible for xyz functionality.
+**Databases:** Redis, SQLite
